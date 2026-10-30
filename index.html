@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCA III Sem - Cloud Computing PPT Upload</title>
+    <!-- Tailwind CSS for rapid responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        /* Custom file input styling */
+        input[type="file"]::file-selector-button {
+            border: none;
+            background: #4f46e5;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            color: white;
+            cursor: pointer;
+            transition: background .2s ease-in-out;
+            margin-right: 1rem;
+        }
+        input[type="file"]::file-selector-button:hover {
+            background: #4338ca;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Added an ID to the main container to easily hide it later -->
+    <div id="uploadContainer" class="w-full max-w-lg bg-white rounded-2xl shadow-xl overflow-hidden">
+        <!-- Header Section -->
+        <div class="bg-indigo-600 px-6 py-8 text-center text-white">
+            <i class="fa-solid fa-cloud-arrow-up text-5xl mb-4 opacity-90"></i>
+            <h1 class="text-2xl font-bold tracking-wide">Cloud Computing</h1>
+            <p class="text-indigo-200 mt-2 text-sm">MCA III Semester - PPT Submission Portal</p>
+        </div>
+
+        <!-- Form Section -->
+        <div class="p-6 sm:p-8">
+            <form id="uploadForm" class="space-y-6">
+                
+                <!-- Group Number / Student Name -->
+                <div>
+                    <label for="groupInfo" class="block text-sm font-medium text-gray-700 mb-1">Group Number / Team Name</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-users text-gray-400"></i>
+                        </div>
+                        <input type="text" id="groupInfo" name="groupInfo" required
+                            class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors"
+                            placeholder="e.g: Group Name">
+                    </div>
+                </div>
+
+                <!-- Topic Name -->
+                <div>
+                    <label for="topicName" class="block text-sm font-medium text-gray-700 mb-1">Presentation Topic</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-book text-gray-400"></i>
+                        </div>
+                        <input type="text" id="topicName" name="topicName" required
+                            class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors"
+                            placeholder="Project Name">
+                    </div>
+                </div>
+
+                <!-- File Upload -->
+                <div>
+                    <label for="pptFile" class="block text-sm font-medium text-gray-700 mb-1">Upload Presentation File</label>
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-indigo-500 transition-colors bg-gray-50">
+                        <div class="space-y-1 text-center w-full">
+                            <div class="flex text-sm text-gray-600 justify-center w-full">
+                                <label for="pptFile" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 w-full">
+                                    <input id="pptFile" name="pptFile" type="file" accept=".ppt, .pptx, .pdf" required class="block w-full text-sm text-slate-500 w-full">
+                                </label>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">
+                                PPT, PPTX, or PDF up to 10MB
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar Container (Newly Added) -->
+                <div id="progressContainer" class="hidden">
+                    <div class="flex justify-between mb-1">
+                      <span class="text-sm font-medium text-indigo-700">Uploading...</span>
+                      <span id="progressText" class="text-sm font-medium text-indigo-700">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                      <div id="progressBar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Status Message Area -->
+                <div id="statusMessage" class="hidden rounded-lg p-4 text-sm text-center font-medium"></div>
+
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit" id="submitBtn"
+                        class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                        <i class="fa-solid fa-upload mr-2"></i>
+                        Upload to Portal
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Footer -->
+        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 text-center text-xs text-gray-500">
+            Internal evaluation purpose only. Files are stored securely.
+        </div>
+    </div>
+
+    <!-- Success Alert Modal (Newly Added) -->
+    <div id="successModal" class="fixed inset-0 z-50 hidden bg-gray-900 bg-opacity-50 flex items-center justify-center backdrop-blur-sm transition-opacity">
+        <div class="bg-white rounded-2xl p-8 max-w-sm w-full mx-4 shadow-2xl transform transition-all text-center">
+            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
+                <i class="fa-solid fa-check text-3xl text-green-600"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Upload Successful</h3>
+            <p class="text-sm text-gray-500 mb-6">Your PPT file upload successfully .</p>
+            <button id="closeModalBtn" class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
+                Done
+            </button>
+        </div>
+    </div>
+
+    <!-- Confirmation Page (Newly Added, hidden by default) -->
+    <div id="confirmationPage" class="hidden w-full max-w-lg bg-white rounded-2xl shadow-xl overflow-hidden text-center p-10">
+        <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-indigo-100 mb-6">
+            <i class="fa-solid fa-file-circle-check text-4xl text-indigo-600"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">your response record successfully,</h2>
+        <p class="text-gray-600 mb-8">Thank you! Your presentation has been securely saved.</p>
+        <button onclick="location.reload()" class="inline-flex justify-center items-center py-2.5 px-6 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+            Submit Another Response
+        </button>
+    </div>
+
+    <script>
+        // Cloudinary Configuration
+        const CLOUD_NAME = "dlukh0zsh";
+        const UPLOAD_PRESET = "mca_ppt_preset";
+
+        const uploadContainer = document.getElementById('uploadContainer'); // Added reference
+        const uploadForm = document.getElementById('uploadForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const statusMessage = document.getElementById('statusMessage');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const successModal = document.getElementById('successModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const confirmationPage = document.getElementById('confirmationPage'); // Added reference
+
+        // Close Modal Event Modified
+        closeModalBtn.addEventListener('click', () => {
+            successModal.classList.add('hidden');
+            // Hide the form and show the final confirmation page
+            uploadContainer.classList.add('hidden');
+            confirmationPage.classList.remove('hidden');
+        });
+
+        uploadForm.addEventListener('submit', function(e) {
+            e.preventDefault(); 
+
+            const fileInput = document.getElementById('pptFile');
+            const groupInfo = document.getElementById('groupInfo').value;
+            const topicName = document.getElementById('topicName').value;
+            const file = fileInput.files[0];
+
+            if (!file) return;
+
+            // Prepare Data for Cloudinary
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', UPLOAD_PRESET);
+            formData.append('folder', 'Cloud Computing PPT'); // Folder Name 
+
+            // Create a clean file name based on Group Info and Topic
+            const safeName = `${groupInfo}_${topicName}`.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+            formData.append('public_id', safeName);
+            
+            // UI Updates: Disable button, show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Uploading...';
+            statusMessage.className = "hidden"; 
+            
+            // Show progress bar
+            progressContainer.classList.remove('hidden');
+            progressBar.style.width = '0%';
+            progressText.innerText = '0%';
+
+          
+            const xhr = new XMLHttpRequest();
+            
+            xhr.upload.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    const percentComplete = Math.round((evt.loaded / evt.total) * 100);
+                    progressBar.style.width = percentComplete + '%';
+                    progressText.innerText = percentComplete + '%';
+                }
+            }, false);
+
+            xhr.addEventListener("load", function(evt) {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    // Success UI Updates
+                    progressContainer.classList.add('hidden');
+                    uploadForm.reset();
+                    successModal.classList.remove('hidden'); // Show green tick modal
+                } else {
+                    const response = JSON.parse(xhr.responseText);
+                    showError(response.error.message || "Upload failed");
+                }
+                resetBtn();
+            }, false);
+
+            xhr.addEventListener("error", function(evt) {
+                showError("Network error occurred during upload.");
+                resetBtn();
+            }, false);
+
+            xhr.open("POST", `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`);
+            xhr.send(formData);
+        });
+
+        function showError(msg) {
+            progressContainer.classList.add('hidden');
+            statusMessage.textContent = "Failed to upload: " + msg;
+            statusMessage.className = "block rounded-lg p-4 text-sm text-center font-medium bg-red-100 text-red-800 border border-red-200 mt-4";
+        }
+
+        function resetBtn() {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-upload mr-2"></i> Upload to Portal';
+        }
+    </script>
+</body>
+</html>
